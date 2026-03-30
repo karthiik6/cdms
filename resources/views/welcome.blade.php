@@ -183,9 +183,8 @@
       <div class="row g-4 align-items-center">
         <div class="col-12 col-lg-7">
           <div class="mini-label mb-2">Home</div>
-          <h1 class="section-title fw-bold mb-3">Simple, professional donation management for your community.</h1>
           <p class="muted mb-4">
-            CDMS helps organize clothing donations, volunteer tasks, inventory, and support requests in one clear and reliable system.
+            Welcome to CDMS. Manage donations, volunteer support, and clothing distribution from one place.
           </p>
 
           <div class="hero-actions d-flex flex-column flex-sm-row gap-3 mb-3">
