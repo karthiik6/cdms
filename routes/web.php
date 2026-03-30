@@ -43,8 +43,12 @@ Route::get('/', function () {
         // Keep landing page accessible even before migrations are complete.
     }
 
-    return view('welcome', compact('publicStats'));
-});
+    return view('marketing.home', compact('publicStats'));
+})->name('marketing.home');
+
+Route::view('/services', 'marketing.services')->name('marketing.services');
+Route::view('/about', 'marketing.about')->name('marketing.about');
+Route::view('/contact', 'marketing.contact')->name('marketing.contact');
 
 Route::post('/admin/customer-requests/{customerRequest}/assign', [\App\Http\Controllers\AdminCustomerRequestController::class, 'assignVolunteer'])
     ->middleware(['auth', 'role:admin']);
