@@ -12,24 +12,30 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     :root{
-      --bg:#f6f8f3;
-      --white:#ffffff;
-      --text:#1f2b20;
-      --muted:#657267;
-      --line:#d8e0d3;
-      --primary:#2f6b3b;
-      --primary-dark:#25552f;
-      --soft:#eef4e9;
+      --bg:#f4f2ec;
+      --white:#fffdf9;
+      --text:#243126;
+      --muted:#697768;
+      --line:#d8d4c8;
+      --primary:#426b4a;
+      --primary-dark:#2f5136;
+      --soft:#eef0e5;
+      --soft-accent:#e7e1d3;
+      --shadow:0 18px 42px rgba(44, 52, 39, .08);
     }
     body{
       min-height:100vh;
       font-family:"Manrope", sans-serif;
       color:var(--text);
-      background:var(--bg);
+      background:
+        radial-gradient(900px 520px at 12% 0%, rgba(221, 229, 210, .55), transparent 55%),
+        radial-gradient(760px 460px at 100% 10%, rgba(231, 225, 211, .45), transparent 52%),
+        var(--bg);
     }
     .nav-shell{
-      background:rgba(255,255,255,.94);
+      background:rgba(255,253,249,.94);
       border-bottom:1px solid var(--line);
+      backdrop-filter:blur(10px);
     }
     .brand{
       display:inline-flex;
@@ -54,10 +60,11 @@
       color:var(--primary);
     }
     .btn-brand{
-      background:var(--primary);
+      background:linear-gradient(135deg, var(--primary), #5b8461);
       border-color:var(--primary);
       color:#fff;
       font-weight:700;
+      box-shadow:0 12px 26px rgba(66, 107, 74, .18);
     }
     .btn-brand:hover,
     .btn-brand:focus{
@@ -66,7 +73,7 @@
       color:#fff;
     }
     .btn-soft{
-      background:var(--white);
+      background:rgba(255,253,249,.92);
       border:1px solid var(--line);
       color:var(--primary);
       font-weight:700;
@@ -81,6 +88,7 @@
       background:var(--white);
       border:1px solid var(--line);
       border-radius:20px;
+      box-shadow:var(--shadow);
     }
     .hero{
       padding:2rem;
@@ -108,7 +116,7 @@
       padding:1rem;
       border:1px solid var(--line);
       border-radius:16px;
-      background:var(--soft);
+      background:linear-gradient(180deg, var(--soft) 0%, #f7f6f1 100%);
     }
     .stat-box strong{
       display:block;

@@ -10,27 +10,27 @@
 
   <style>
     :root{
-      --sky-bg:#eaf5ff;
-      --sky-bg-soft:#f5faff;
-      --sky-text:#0f2746;
-      --sky-muted:#56708f;
-      --sky-line:#c7ddf5;
-      --sky-card:#ffffff;
-      --sky-shadow:0 12px 34px rgba(37, 91, 149, .14);
-      --sky-primary:#2786e6;
-      --sky-primary-dark:#1f6fbe;
-      --sky-primary-soft:#d5eaff;
+      --sky-bg:#f4f2ec;
+      --sky-bg-soft:#f8f6f1;
+      --sky-text:#243126;
+      --sky-muted:#697768;
+      --sky-line:#d8d4c8;
+      --sky-card:#fffdf9;
+      --sky-shadow:0 16px 36px rgba(44, 52, 39, .10);
+      --sky-primary:#426b4a;
+      --sky-primary-dark:#2f5136;
+      --sky-primary-soft:#e8efe2;
     }
     body{
       background:
-        radial-gradient(1100px 680px at 12% 5%, rgba(87,163,235,.20), transparent 55%),
-        radial-gradient(1000px 700px at 88% 12%, rgba(170,212,248,.28), transparent 52%),
+        radial-gradient(980px 620px at 10% 4%, rgba(221,229,210,.55), transparent 55%),
+        radial-gradient(900px 640px at 92% 12%, rgba(231,225,211,.42), transparent 52%),
         linear-gradient(180deg, var(--sky-bg) 0%, var(--sky-bg-soft) 100%);
       color:var(--sky-text);
     }
     .shell{ min-height: 100vh; }
     .sidebar{
-      background: rgba(255,255,255,.86);
+      background: rgba(255,253,249,.88);
       border-right: 1px solid var(--sky-line);
       backdrop-filter: blur(8px);
     }
@@ -46,13 +46,13 @@
       border-radius: 12px;
       padding: .65rem .85rem;
     }
-    .nav-link:hover{ color:var(--sky-text); background: #edf6ff; }
-    .nav-link.active{ color:#0c3f71; background: var(--sky-primary-soft); border: 1px solid #b7d7f7; }
+    .nav-link:hover{ color:var(--sky-text); background: #f2f2eb; }
+    .nav-link.active{ color:var(--sky-primary-dark); background: var(--sky-primary-soft); border: 1px solid #cfdac9; }
     .muted{ color: var(--sky-muted); }
     .badge-role{
-      background: #eef6ff;
-      border: 1px solid #b8d9fb;
-      color:#1b5d98;
+      background: #f2f3eb;
+      border: 1px solid #d6ddcf;
+      color:var(--sky-primary-dark);
     }
     .btn{
       border-radius: 11px;
@@ -64,25 +64,25 @@
     .btn-info{
       color: #fff;
       border-color: var(--sky-primary);
-      background: linear-gradient(135deg, var(--sky-primary), #52a9f5);
-      box-shadow: 0 10px 22px rgba(39,134,230,.25);
+      background: linear-gradient(135deg, var(--sky-primary), #5b8461);
+      box-shadow: 0 10px 22px rgba(66,107,74,.20);
     }
     .btn-primary:hover,
     .btn-success:hover,
     .btn-info:hover{
       color:#fff;
       border-color: var(--sky-primary-dark);
-      background: linear-gradient(135deg, var(--sky-primary-dark), #469de9);
+      background: linear-gradient(135deg, var(--sky-primary-dark), #44694a);
     }
     .btn-outline-light{
-      color: #1d5f99;
-      border-color: #9dc7ef;
-      background: #f4faff;
+      color: var(--sky-primary);
+      border-color: #cfd6c8;
+      background: #fbfaf6;
     }
     .btn-outline-light:hover{
-      color: #0f4d86;
-      border-color: #85b8e8;
-      background: #e7f3ff;
+      color: var(--sky-primary-dark);
+      border-color: #bbc7b4;
+      background: #f2f2eb;
     }
     .btn-danger{
       background: linear-gradient(135deg, #d85454, #b93d3d);
@@ -95,14 +95,14 @@
       color:#1f2f46;
     }
     .form-control, .form-select{
-      border-color: #b8d6f1;
-      background: #f9fcff;
+      border-color: #d8d4c8;
+      background: #faf8f2;
       color: var(--sky-text);
     }
     .form-control:focus, .form-select:focus{
-      border-color: #82b8ea;
-      box-shadow: 0 0 0 .2rem rgba(39,134,230,.16);
-      background: #fff;
+      border-color: #90ab93;
+      box-shadow: 0 0 0 .2rem rgba(66,107,74,.14);
+      background: #fffdf9;
       color: var(--sky-text);
     }
     .table{
@@ -128,11 +128,11 @@
       display:flex; align-items:center; justify-content:space-between;
       padding: 16px 18px;
       border-radius: 16px;
-      background: #f8fbff;
-      border: 1px solid #d0e5fa;
+      background: #f4f3ed;
+      border: 1px solid #ddd8cb;
     }
-    a{ color:#1e73bf; }
-    a:hover{ color:#14568f; }
+    a{ color:var(--sky-primary); }
+    a:hover{ color:var(--sky-primary-dark); }
   </style>
 </head>
 <body>
@@ -197,7 +197,7 @@
 
       @php($unreadNotifications = auth()->user()->unreadNotifications()->latest()->limit(5)->get())
       @if($unreadNotifications->count() > 0)
-        <div class="card-glass p-3 mb-3" style="border:1px solid #b7d7f7;">
+        <div class="card-glass p-3 mb-3" style="border:1px solid #cfdac9;">
           <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
             <div class="fw-semibold">Notifications ({{ auth()->user()->unreadNotifications()->count() }} unread)</div>
             <form method="POST" action="{{ url('/notifications/read-all') }}">
@@ -207,7 +207,7 @@
           </div>
           <div class="d-grid gap-2">
             @foreach($unreadNotifications as $n)
-              <div class="p-2 rounded" style="background:#f8fbff; border:1px solid #d0e5fa;">
+              <div class="p-2 rounded" style="background:#f4f3ed; border:1px solid #ddd8cb;">
                 <div class="fw-semibold">{{ $n->data['title'] ?? 'Notification' }}</div>
                 <div class="muted">{{ $n->data['message'] ?? '' }}</div>
                 @if(!empty($n->data['url']))
