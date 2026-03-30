@@ -26,6 +26,12 @@
       <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="you@example.com" required>
     </div>
 
+    <div class="mb-3">
+      <label class="form-label">Phone Number</label>
+      <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" placeholder="Enter your contact number" required>
+      <div class="muted mt-1" style="font-size:.9rem;">Used for volunteer coordination, pickup, and delivery updates.</div>
+    </div>
+
     @if(!empty($role))
       <input type="hidden" name="role" value="{{ $role }}">
       <div class="mb-3">

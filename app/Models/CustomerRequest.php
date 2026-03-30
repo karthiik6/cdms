@@ -11,7 +11,9 @@ class CustomerRequest extends Model
         'status',
         'note',
         'delivery_location',
+        'contact_phone',
         'donor_donation_allowed',
+        'show_volunteer_details_to_customer',
     ];
 
     public function customer()

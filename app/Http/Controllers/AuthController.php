@@ -31,6 +31,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
+            'phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+()\\-\\s]{7,20}$/'],
             'password' => 'required|min:6|confirmed',
             'role' => 'required|in:donor,volunteer,customer', // admin not allowed from register
         ]);
@@ -38,6 +39,7 @@ class AuthController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);

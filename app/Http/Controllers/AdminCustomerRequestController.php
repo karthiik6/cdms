@@ -108,6 +108,11 @@ class AdminCustomerRequestController extends Controller
                 'required',
                 Rule::exists('users', 'id')->where('role', 'volunteer'),
             ],
+            'show_volunteer_details_to_customer' => 'nullable|boolean',
+        ]);
+
+        $customerRequest->update([
+            'show_volunteer_details_to_customer' => $request->boolean('show_volunteer_details_to_customer'),
         ]);
 
         Task::updateOrCreate(
@@ -135,6 +140,23 @@ class AdminCustomerRequestController extends Controller
         ));
 
         return back()->with('success', 'Volunteer assigned to customer delivery task.');
+    }
+
+    public function updateVolunteerSharing(Request $request, CustomerRequest $customerRequest)
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $request->validate([
+            'show_volunteer_details_to_customer' => 'required|boolean',
+        ]);
+
+        $customerRequest->update([
+            'show_volunteer_details_to_customer' => (bool) $request->show_volunteer_details_to_customer,
+        ]);
+
+        return back()->with('success', 'Customer volunteer visibility updated.');
     }
 
     public function setDonorDonationPermission(Request $request, CustomerRequest $customerRequest)

@@ -53,6 +53,11 @@ class AdminDonationController extends Controller
                 'required',
                 Rule::exists('users', 'id')->where('role', 'volunteer'),
             ],
+            'show_volunteer_details_to_donor' => 'nullable|boolean',
+        ]);
+
+        $donation->update([
+            'show_volunteer_details_to_donor' => $request->boolean('show_volunteer_details_to_donor'),
         ]);
 
         Task::updateOrCreate(
@@ -66,6 +71,23 @@ class AdminDonationController extends Controller
         );
 
         return back()->with('success', 'Volunteer assigned for pickup!');
+    }
+
+    public function updateVolunteerSharing(Request $request, Donation $donation)
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $request->validate([
+            'show_volunteer_details_to_donor' => 'required|boolean',
+        ]);
+
+        $donation->update([
+            'show_volunteer_details_to_donor' => (bool) $request->show_volunteer_details_to_donor,
+        ]);
+
+        return back()->with('success', 'Donor volunteer visibility updated.');
     }
 
     public function updateStatus(Request $request, Donation $donation)

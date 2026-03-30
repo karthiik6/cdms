@@ -59,6 +59,9 @@
           <div class="muted" style="margin-top:4px;">
             Donor: {{ $d->donor->name }} ({{ $d->donor->email }})
           </div>
+          <div class="muted" style="margin-top:4px;">
+            Donor Contact: {{ $d->contact_phone ?: ($d->donor->phone ?: 'Not available') }}
+          </div>
 
           <div class="muted" style="margin-top:6px;">
             Status:
@@ -112,12 +115,26 @@
               <select name="volunteer_id" required style="padding:6px 10px; min-width:200px;">
                 <option value="">-- choose --</option>
                 @foreach($volunteers as $v)
-                  <option value="{{ $v->id }}">{{ $v->name }}</option>
+                  <option value="{{ $v->id }}">{{ $v->name }}{{ $v->phone ? ' ('.$v->phone.')' : '' }}</option>
                 @endforeach
               </select>
               <button type="submit" class="btn btn-primary btn-sm">Assign</button>
             </div>
+            <label class="muted mt-2 d-block">
+              <input type="checkbox" name="show_volunteer_details_to_donor" value="1" {{ $d->show_volunteer_details_to_donor ? 'checked' : '' }}>
+              Allow donor to see assigned volunteer name and phone number
+            </label>
           </form>
+
+          @if($d->task)
+            <form method="POST" action="{{ url('/admin/donations/'.$d->id.'/volunteer-sharing') }}" class="mb-2">
+              @csrf
+              <input type="hidden" name="show_volunteer_details_to_donor" value="{{ $d->show_volunteer_details_to_donor ? 0 : 1 }}">
+              <button type="submit" class="btn btn-outline-light btn-sm">
+                {{ $d->show_volunteer_details_to_donor ? 'Hide Volunteer Details from Donor' : 'Share Volunteer Details with Donor' }}
+              </button>
+            </form>
+          @endif
 
           <form method="POST" action="{{ url('/admin/donations/'.$d->id.'/status') }}">
             @csrf
@@ -137,7 +154,9 @@
             @if($d->task)
               {{ $d->task->status }} (Volunteer: {{ $d->task->volunteer->name ?? 'N/A' }})
               <br>
-              Pickup Address shared with volunteer.
+              Volunteer Phone: {{ $d->task->volunteer->phone ?? 'Not available' }}
+              <br>
+              Donor can see volunteer details: {{ $d->show_volunteer_details_to_donor ? 'Yes' : 'No' }}
             @else
               Not assigned
             @endif

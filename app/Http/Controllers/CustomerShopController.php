@@ -103,6 +103,7 @@ class CustomerShopController extends Controller
         $request->validate([
             'note' => 'nullable|string|max:1000',
             'delivery_location' => 'required|string|max:500',
+            'contact_phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+()\\-\\s]{7,20}$/'],
             'items' => 'required|array|min:1',
         ]);
 
@@ -156,7 +157,9 @@ class CustomerShopController extends Controller
                 'status' => 'Pending',
                 'note' => $request->note,
                 'delivery_location' => $request->delivery_location,
+                'contact_phone' => $request->contact_phone,
                 'donor_donation_allowed' => false,
+                'show_volunteer_details_to_customer' => false,
             ]);
 
             foreach ($selectedGroups as $group) {
@@ -207,6 +210,7 @@ class CustomerShopController extends Controller
 
         $requests = CustomerRequest::with('items.inventory.item')
             ->with('donations.donor')
+            ->with('task.volunteer')
             ->withCount('donations')
             ->where('customer_id', auth()->id())
             ->latest()

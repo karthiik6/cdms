@@ -42,6 +42,13 @@
         <div class="muted mt-1" style="font-size:.9rem;">This address will be shared with the assigned volunteer for collection.</div>
       </div>
 
+      <div class="col-12 col-md-6">
+        <label class="form-label">Pickup Contact Number</label>
+        <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', auth()->user()->phone) }}"
+               placeholder="Phone number for pickup coordination" required>
+        <div class="muted mt-1" style="font-size:.9rem;">Required so admin and the assigned volunteer can contact you for pickup.</div>
+      </div>
+
       <div class="col-12">
         <hr style="border-color: rgba(255,255,255,.12);">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">

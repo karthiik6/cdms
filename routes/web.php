@@ -52,6 +52,8 @@ Route::view('/contact', 'marketing.contact')->name('marketing.contact');
 
 Route::post('/admin/customer-requests/{customerRequest}/assign', [\App\Http\Controllers\AdminCustomerRequestController::class, 'assignVolunteer'])
     ->middleware(['auth', 'role:admin']);
+Route::post('/admin/customer-requests/{customerRequest}/volunteer-sharing', [\App\Http\Controllers\AdminCustomerRequestController::class, 'updateVolunteerSharing'])
+    ->middleware(['auth', 'role:admin']);
 
 // CUSTOMER
 Route::get('/customer/products', [CustomerShopController::class, 'products'])->middleware(['auth', 'role:customer']);
@@ -158,6 +160,7 @@ Route::post('/admin/requests/{clothingRequest}/assign', [AdminRequestController:
 Route::get('/admin/donations', [AdminDonationController::class, 'index'])->middleware(['auth', 'role:admin']);
 Route::post('/admin/donations/{donation}/assign', [AdminDonationController::class, 'assignVolunteer'])->middleware(['auth', 'role:admin']);
 Route::post('/admin/donations/{donation}/status', [AdminDonationController::class, 'updateStatus'])->middleware(['auth', 'role:admin']);
+Route::post('/admin/donations/{donation}/volunteer-sharing', [AdminDonationController::class, 'updateVolunteerSharing'])->middleware(['auth', 'role:admin']);
 
 Route::get('/admin/beneficiaries', function () {
     return view('admin.beneficiaries');

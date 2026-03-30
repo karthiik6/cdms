@@ -51,6 +51,20 @@
       <div class="muted mt-1" style="font-size:.9rem;">
         Admin and assigned volunteer will use this location after approval.
       </div>
+
+      <div class="fw-semibold mb-2 mt-3">Contact Number</div>
+      <input
+        type="text"
+        name="contact_phone"
+        class="form-control"
+        maxlength="20"
+        value="{{ old('contact_phone', auth()->user()->phone) }}"
+        placeholder="Phone number for delivery coordination"
+        required
+      >
+      <div class="muted mt-1" style="font-size:.9rem;">
+        Required so admin and the assigned volunteer can contact you for delivery.
+      </div>
     </div>
 
     <div class="card-glass p-4">

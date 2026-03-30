@@ -23,7 +23,7 @@ class DonationController extends Controller
 
         $status = $request->query('status');
 
-        $query = \App\Models\Donation::with('items')
+        $query = \App\Models\Donation::with(['items', 'task.volunteer'])
             ->where('donor_id', auth()->id())
             ->latest();
 
@@ -45,6 +45,7 @@ class DonationController extends Controller
         $request->validate([
             'donation_date' => 'nullable|date',
             'pickup_address' => 'required|string|max:1000',
+            'contact_phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+()\\-\\s]{7,20}$/'],
             'items' => 'required|array|min:1',
             'items.*.category' => 'required|string',
             'items.*.size' => 'required|string',
@@ -69,6 +70,7 @@ class DonationController extends Controller
             'donor_id' => auth()->id(),
             'donation_date' => $request->donation_date,
             'pickup_address' => $request->pickup_address,
+            'contact_phone' => $request->contact_phone,
             'status' => 'Pending',
             'photo' => $photoPath,
         ]);

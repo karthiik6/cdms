@@ -30,28 +30,46 @@
   @forelse($donations as $d)
     <div class="card-glass p-3 mb-3">
       <div class="d-flex justify-content-between flex-wrap gap-2">
-  <div>
-    <div class="fw-semibold">Donation #{{ $d->id }}</div>
-    <div class="muted">Status: {{ $d->status }}</div>
-  </div>
+        <div>
+          <div class="fw-semibold">Donation #{{ $d->id }}</div>
+          <div class="muted">Status: {{ $d->status }}</div>
+        </div>
 
-  <div class="muted">
-    Date: {{ $d->donation_date ?? $d->created_at->toDateString() }}
-  </div>
-</div>
+        <div class="muted">
+          Date: {{ $d->donation_date ?? $d->created_at->toDateString() }}
+        </div>
+      </div>
 
-@if($d->photo)
-  <div style="margin-top:10px;">
-    <img src="{{ asset('storage/'.$d->photo) }}"
-         style="max-width:220px;border-radius:12px;">
-  </div>
-@endif
+      @if($d->photo)
+        <div style="margin-top:10px;">
+          <img src="{{ asset('storage/'.$d->photo) }}"
+               style="max-width:220px;border-radius:12px;">
+        </div>
+      @endif
 
-<hr style="border-color: rgba(255,255,255,.12);">
+      <hr style="border-color: rgba(255,255,255,.12);">
       <div class="muted mb-3">
         <b>Pickup Address:</b><br>
         {{ $d->pickup_address }}
       </div>
+
+      <div class="muted mb-3">
+        <b>Contact Number:</b> {{ $d->contact_phone ?: 'Not provided' }}
+      </div>
+
+      <div class="muted mb-3">
+        <b>Pickup Tracking:</b><br>
+        @if($d->task)
+          Volunteer assigned. Task status: {{ $d->task->status }}.
+          @if($d->show_volunteer_details_to_donor)
+            <br>Name: {{ $d->task->volunteer->name ?? 'Not available' }}
+            <br>Phone: {{ $d->task->volunteer->phone ?? 'Not available' }}
+          @else
+            <br>Volunteer contact details have not been shared by admin yet.
+          @endif
+        @else
+          Waiting for admin to assign a volunteer.
+        @endif
       </div>
 
       <hr style="border-color: rgba(255,255,255,.12);">

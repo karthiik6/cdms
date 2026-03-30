@@ -31,6 +31,7 @@
         <div>
           <div class="fw-semibold">Request #{{ $r->id }}</div>
           <div class="muted">Customer: {{ $r->customer->name }} ({{ $r->customer->email }})</div>
+          <div class="muted">Customer Contact: {{ $r->contact_phone ?: ($r->customer->phone ?: 'Not available') }}</div>
           <div class="muted">Status: <b>{{ $r->status }}</b></div>
           @if($r->delivery_location)
             <div class="muted">Location: <b>{{ $r->delivery_location }}</b></div>
@@ -120,12 +121,26 @@
             <select name="volunteer_id" required style="padding:6px 10px; min-width:200px;">
               <option value="">-- choose --</option>
               @foreach($volunteers as $v)
-                <option value="{{ $v->id }}">{{ $v->name }}</option>
+                <option value="{{ $v->id }}">{{ $v->name }}{{ $v->phone ? ' ('.$v->phone.')' : '' }}</option>
               @endforeach
             </select>
             <button class="btn btn-primary btn-sm">Assign</button>
           </div>
+          <label class="muted mt-2 d-block">
+            <input type="checkbox" name="show_volunteer_details_to_customer" value="1" {{ $r->show_volunteer_details_to_customer ? 'checked' : '' }}>
+            Allow customer to see assigned volunteer name and phone number
+          </label>
         </form>
+
+        @if($r->task)
+          <form method="POST" action="{{ url('/admin/customer-requests/'.$r->id.'/volunteer-sharing') }}" style="margin-top:10px;">
+            @csrf
+            <input type="hidden" name="show_volunteer_details_to_customer" value="{{ $r->show_volunteer_details_to_customer ? 0 : 1 }}">
+            <button class="btn btn-outline-light btn-sm">
+              {{ $r->show_volunteer_details_to_customer ? 'Hide Volunteer Details from Customer' : 'Share Volunteer Details with Customer' }}
+            </button>
+          </form>
+        @endif
 
         <form method="POST" action="{{ url('/admin/customer-requests/'.$r->id.'/donor-permission') }}" style="margin-top:10px;">
           @csrf
@@ -140,6 +155,10 @@
         <b>Volunteer Task:</b>
         @if($r->task)
           {{ $r->task->status }} ({{ $r->task->volunteer->name ?? 'N/A' }})
+          <br>
+          Volunteer Phone: {{ $r->task->volunteer->phone ?? 'Not available' }}
+          <br>
+          Customer can see volunteer details: {{ $r->show_volunteer_details_to_customer ? 'Yes' : 'No' }}
         @else
           Not assigned
         @endif

@@ -21,10 +21,25 @@
       <div class="muted">Status: <b>{{ $r->status }}</b></div>
       @if($r->note) <div class="muted mt-2">Note: {{ $r->note }}</div> @endif
       @if($r->delivery_location) <div class="muted mt-1">Location: {{ $r->delivery_location }}</div> @endif
+      @if($r->contact_phone) <div class="muted mt-1">Contact Number: {{ $r->contact_phone }}</div> @endif
       <div class="muted mt-1">Donor Donations: <b>{{ $r->donations_count }}</b></div>
       <div class="muted mt-1">
         Donor Support Enabled:
         <b>{{ $r->donor_donation_allowed ? 'Yes' : 'No' }}</b>
+      </div>
+      <div class="muted mt-1">
+        Delivery Tracking:
+        @if($r->task)
+          <b>{{ $r->task->status }}</b>
+          @if($r->show_volunteer_details_to_customer)
+            <br>Name: {{ $r->task->volunteer->name ?? 'Not available' }}
+            <br>Phone: {{ $r->task->volunteer->phone ?? 'Not available' }}
+          @else
+            <br>Volunteer contact details have not been shared by admin yet.
+          @endif
+        @else
+          <b>Waiting for volunteer assignment</b>
+        @endif
       </div>
 
       <hr style="border-color: rgba(255,255,255,.12);">
