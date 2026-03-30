@@ -40,10 +40,12 @@
         </div>
       </div>
 
-      @if($d->photo)
+      @if($d->photo_url)
         <div style="margin-top:10px;">
-          <img src="{{ asset('storage/'.$d->photo) }}"
-               style="max-width:220px;border-radius:12px;">
+          <div class="muted mb-1">Donation Photo</div>
+          <img src="{{ $d->photo_url }}"
+               alt="Donation photo for donation {{ $d->id }}"
+               style="max-width:220px;border-radius:12px;border:1px solid rgba(0,0,0,.08);">
         </div>
       @endif
 

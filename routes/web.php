@@ -19,6 +19,7 @@ use App\Notifications\SystemAlert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -49,6 +50,12 @@ Route::get('/', function () {
 Route::view('/services', 'marketing.services')->name('marketing.services');
 Route::view('/about', 'marketing.about')->name('marketing.about');
 Route::view('/contact', 'marketing.contact')->name('marketing.contact');
+Route::get('/donation-photos/{path}', function (string $path) {
+    abort_unless(str_starts_with($path, 'donation_photos/'), 404);
+    abort_unless(Storage::disk('public')->exists($path), 404);
+
+    return response()->file(Storage::disk('public')->path($path));
+})->where('path', '.*')->name('donations.photo');
 
 Route::post('/admin/customer-requests/{customerRequest}/assign', [\App\Http\Controllers\AdminCustomerRequestController::class, 'assignVolunteer'])
     ->middleware(['auth', 'role:admin']);
